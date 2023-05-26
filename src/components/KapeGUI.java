@@ -1,4 +1,4 @@
-import components.KapeTable;
+package components;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,6 +17,8 @@ public class KapeGUI extends JFrame {
     private KapeTable table;
     private Vector<String> columnNames;
 
+    public KapeGUI(){}
+
     public void init() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(new Dimension(750, 750));
@@ -29,18 +31,15 @@ public class KapeGUI extends JFrame {
         mainPanel.setBackground(Color.WHITE);
 
         // Create and configure components
-        JLabel titleLabel = new JLabel("Kape Shop POS");
+        JLabel titleLabel = new JLabel("Fordina Cafe INVENTORY");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
         JButton addButton = new JButton("Add Product");
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                showAddProductDialog();
-            }
-        });
-        JButton deleteButton = new JButton("Delete Product");
-        JButton sellButton = new JButton("Sell Product");
+
+        addButton.addActionListener(e -> showAddProductDialog());
+
+        JButton deleteButton;
+        JButton sellButton;
 
         // Fetch data from the database
         Vector<Vector<Object>> data = fetchDataFromDatabase();
@@ -52,11 +51,8 @@ public class KapeGUI extends JFrame {
         columnNames.add("Price");
         columnNames.add("Quantity");
 
-
         // Create the custom table with the table model
         table = new KapeTable(data, columnNames);
-
-
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -118,6 +114,13 @@ public class KapeGUI extends JFrame {
 
         // Add the Sell Product and Refresh buttons
         sellButton = new JButton("Sell Product");
+
+        sellButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openSellProductWindow();
+            }
+        });
         gbc.gridy = 3;
         gbc.gridx = 0;
         gbc.gridwidth = 1;
@@ -136,6 +139,23 @@ public class KapeGUI extends JFrame {
         // Set the main panel as the content pane
         this.setContentPane(mainPanel);
         this.setVisible(true);
+    }
+
+    private void openSellProductWindow() {
+        SellProductWindow sellProductWindow = new SellProductWindow();
+
+        // Fetch data from the database
+        Vector<Vector<Object>> data = fetchDataFromDatabase();
+        System.out.println(data);
+
+        Vector<String> columnNames = new Vector<>();
+        columnNames.add("Product ID");
+        columnNames.add("Product Name");
+        columnNames.add("Price");
+        columnNames.add("Quantity");
+
+        sellProductWindow.populateTable(data, columnNames);
+        sellProductWindow.setVisible(true);
     }
 
     private void updateProduct() {
@@ -167,7 +187,7 @@ public class KapeGUI extends JFrame {
         }
     }
 
-    private void refreshTableData() {
+    public void refreshTableData() {
         Vector<Vector<Object>> data = fetchDataFromDatabase();
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
         tableModel.setDataVector(data, columnNames);
@@ -198,6 +218,4 @@ public class KapeGUI extends JFrame {
             throw new RuntimeException(e.getMessage());
         }
     }
-
-
 }

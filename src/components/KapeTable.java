@@ -6,8 +6,13 @@ import java.awt.*;
 import java.util.Vector;
 
 public class KapeTable extends JTable {
-    public KapeTable (Vector<Vector<Object>> data, Vector<String> columnNames) {
-        super(new DefaultTableModel(data, columnNames));
+    public KapeTable(Vector<Vector<Object>> data, Vector<String> columnNames) {
+        super(new customTableModel(data, columnNames));
+        initTable();
+    }
+
+    public KapeTable(DefaultTableModel tableModel) {
+        super(tableModel);
         initTable();
     }
 
@@ -18,11 +23,17 @@ public class KapeTable extends JTable {
         setGridColor(Color.LIGHT_GRAY);
         setFillsViewportHeight(true);
     }
-
 }
 
 class customTableModel extends DefaultTableModel{
 
+    public customTableModel(Vector<? extends Vector> data, Vector<?> columnNames){
+        super(data, columnNames);
+    }
 
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return false;
+    }
 
 }

@@ -1,24 +1,24 @@
+package components;
+
+import components.DBConnector;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class UpdateInfoDialog extends JDialog {
+public class AddProductDialog extends JDialog {
     private JTextField productIdField, productNameField, priceField, quantityField;
-    private int productId;
 
-    public UpdateInfoDialog(JFrame parent, int productId, String existingName, BigDecimal existingPrice, int existingQuantity) {
-        super(parent, "Update Product", true);
-        this.productId = productId;
-
-        initComponents(existingName, existingPrice, existingQuantity);
+    public AddProductDialog (JFrame parent) {
+        super (parent, "Add Product", true);
+        initComponents();
     }
 
-    private void initComponents(String existingName, BigDecimal existingPrice, int existingQuantity) {
+    private void initComponents() {
         // Create and configure components
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -30,8 +30,7 @@ public class UpdateInfoDialog extends JDialog {
         gbc.anchor = GridBagConstraints.LINE_START;
         panel.add(productIdLabel, gbc);
 
-        productIdField = new JTextField(String.valueOf(productId));
-        productIdField.setEditable(false);
+        productIdField = new JTextField();
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -43,7 +42,7 @@ public class UpdateInfoDialog extends JDialog {
         gbc.gridy = 1;
         panel.add(nameLabel, gbc);
 
-        productNameField = new JTextField(existingName);
+        productNameField = new JTextField();
         gbc.gridx = 1;
         gbc.gridy = 1;
         panel.add(productNameField, gbc);
@@ -53,7 +52,7 @@ public class UpdateInfoDialog extends JDialog {
         gbc.gridy = 2;
         panel.add(priceLabel, gbc);
 
-        priceField = new JTextField(String.valueOf(existingPrice));
+        priceField = new JTextField();
         gbc.gridx = 1;
         gbc.gridy = 2;
         panel.add(priceField, gbc);
@@ -63,17 +62,17 @@ public class UpdateInfoDialog extends JDialog {
         gbc.gridy = 3;
         panel.add(quantityLabel, gbc);
 
-        quantityField = new JTextField(String.valueOf(existingQuantity));
+        quantityField = new JTextField();
         gbc.gridx = 1;
         gbc.gridy = 3;
         panel.add(quantityField, gbc);
 
-        JButton updateButton = new JButton("Update");
+        JButton addButton = new JButton("Add");
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel.add(updateButton, gbc);
+        panel.add(addButton, gbc);
 
         JButton cancelButton = new JButton("Cancel");
         gbc.gridx = 0;
@@ -88,10 +87,10 @@ public class UpdateInfoDialog extends JDialog {
         this.setLocationRelativeTo(null);
 
         // Add action listeners
-        updateButton.addActionListener(new ActionListener() {
+        addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateProduct();
+                addProduct();
             }
         });
 
@@ -103,32 +102,35 @@ public class UpdateInfoDialog extends JDialog {
         });
     }
 
-    private void updateProduct() {
+    private void addProduct() {
         // Retrieve the input values
         String productName = productNameField.getText();
         double price = Double.parseDouble(priceField.getText());
-        int quantity = Integer.parseInt(quantityField.getText());
+        int productId = Integer.parseInt(productIdField.getText()),
+                quantity = Integer.parseInt(quantityField.getText());
 
         // Validate the input values
-        if (productName.isEmpty()) {
+        if (productName.isEmpty() || productIdField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill out all the fields", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Update the product in the database
+        // Insert the input values to the database
         try {
             Connection con = DBConnector.getInstance().getConnection();
-            String sql = "UPDATE products SET product_name = ?, price = ?, quantity = ? WHERE product_id = ?";
+            String sql = "INSERT INTO products (product_id, product_name, price, quantity) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, productName);
-            ps.setDouble(2, price);
-            ps.setInt(3, quantity);
-            ps.setInt(4, productId);
+            ps.setString(1, String.valueOf(productId));
+            ps.setString(2, productName);
+            ps.setDouble(3, price);
+            ps.setInt(4, quantity);
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(this, "Product updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Product added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             dispose();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error updating product: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error adding product: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 }
