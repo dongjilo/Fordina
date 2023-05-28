@@ -1,5 +1,6 @@
 package components;
 
+import components.Custom.Panels.SearchPanel;
 import components.DBConnector;
 import components.KapeTable;
 
@@ -45,6 +46,8 @@ public class TransactionHistory extends JFrame {
         columnNames.add("Sales Date");
 
         table = new KapeTable(data, columnNames);
+        customTableModel tableModel = new customTableModel();
+        table.setModel(tableModel);
 
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -54,6 +57,9 @@ public class TransactionHistory extends JFrame {
         panel.add(titleLabel);
 
         gbc.gridy = 1;
+        panel.add(new SearchPanel(table), gbc);
+
+        gbc.gridy = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
@@ -68,7 +74,7 @@ public class TransactionHistory extends JFrame {
         try {
             Connection konek = DBConnector.getInstance().getConnection();
             Statement statement = konek.createStatement();
-            try (ResultSet rs = statement.executeQuery("SELECT * FROM sales")) {
+            try (ResultSet rs = statement.executeQuery("select * from sales")) {
                 while (rs.next()) {
                     Vector<Object> row = new Vector<>();
                     for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {

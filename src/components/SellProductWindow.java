@@ -61,6 +61,8 @@ public class SellProductWindow extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         mainPanel.add(scrollPane, gbc);
 
+
+
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.NONE;
@@ -98,9 +100,10 @@ public class SellProductWindow extends JFrame {
             int productId = (int) table.getValueAt(rowIndex, 0);
             String productName = (String) table.getValueAt(rowIndex, 1);
             BigDecimal productPrice = (BigDecimal) table.getValueAt(rowIndex, 2);
+            int quantity = (int) table.getValueAt(rowIndex, 3);
 
             // Perform the necessary operations to record the transaction and update the database
-            insertData(productId, productName, productPrice);
+            insertData(productId, productName, productPrice, quantity);
             refreshTableData();
         } else {
             JOptionPane.showMessageDialog(this, "Please select a product to sell.", "No Product Selected", JOptionPane.WARNING_MESSAGE);
@@ -134,7 +137,7 @@ public class SellProductWindow extends JFrame {
             JOptionPane.showMessageDialog(this, "Error refreshing table data:\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    private void insertData(int productId, String productName, BigDecimal productPrice){
+    private void insertData(int productId, String productName, BigDecimal productPrice, int quantity){
         try {
             Connection con = DBConnector.getInstance().getConnection();
 
@@ -151,9 +154,14 @@ public class SellProductWindow extends JFrame {
             Timestamp salesDate = new Timestamp(System.currentTimeMillis());
             ps.setTimestamp(5, salesDate);
 
-            ps.executeUpdate();
-            updateProductQuantity(productId, quantityToSell);
-            showReceipt(productName, productPrice, quantityToSell, salesDate);
+            // Checks if there is enough products to sell
+            if (quantity - quantityToSell < 0) {
+                JOptionPane.showMessageDialog(this, "Not enough products!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                ps.executeUpdate();
+                updateProductQuantity(productId, quantityToSell);
+                showReceipt(productName, productPrice, quantityToSell, salesDate);
+            }
 
             con.close();
         } catch (SQLException e) {
