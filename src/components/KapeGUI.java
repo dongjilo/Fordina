@@ -1,5 +1,8 @@
 package components;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import components.Custom.Panels.SearchPanel;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -22,13 +25,12 @@ public class KapeGUI extends JFrame {
     public void init() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(new Dimension(750, 750));
-        this.setBackground(new Color(255, 156, 156));
         this.setLocationRelativeTo(null);
+        this.setTitle("Inventory");
 
         // Create the main panel
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridBagLayout());
-        mainPanel.setBackground(Color.WHITE);
 
         // Create and configure components
         JLabel titleLabel = new JLabel("Fordina Cafe INVENTORY");
@@ -55,85 +57,71 @@ public class KapeGUI extends JFrame {
         table = new KapeTable(data, columnNames);
 
         GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        mainPanel.add(new SearchPanel(table), gbc);
+
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         gbc.gridwidth = 2;
         mainPanel.add(titleLabel, gbc);
 
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 3;
         gbc.fill = GridBagConstraints.BOTH;
         mainPanel.add(new JScrollPane(table), gbc);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(3, 2, 10, 10));
-        buttonPanel.setBackground(Color.WHITE);
 
         addButton = new JButton("Add Product");
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                showAddProductDialog();
-            }
-        });
+        addButton.addActionListener(e -> showAddProductDialog());
         buttonPanel.add(addButton);
 
         deleteButton = new JButton("Delete Product");
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = table.getSelectedRow();
-                if (selectedRow != -1) {
-                    int productId = (int) table.getValueAt(selectedRow, 0);
-                    deleteProduct(productId);
-                    refreshTableData();
-                }else {
-                    JOptionPane.showMessageDialog(KapeGUI.this, "Please select a row to delete.", "No Product Selected", JOptionPane.WARNING_MESSAGE);
-                }
+        deleteButton.addActionListener(e -> {
+            int selectedRow = table.getSelectedRow();
+            if (selectedRow != -1) {
+                int productId = (int) table.getValueAt(selectedRow, 0);
+                deleteProduct(productId);
+                refreshTableData();
+            }else {
+                JOptionPane.showMessageDialog(KapeGUI.this, "Please select a row to delete.", "No Product Selected", JOptionPane.WARNING_MESSAGE);
             }
         });
         buttonPanel.add(deleteButton);
 
         JButton updateButton = new JButton("Update Product Information");
-        updateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateProduct();
-            }
-        });
+        updateButton.addActionListener(e -> updateProduct());
         buttonPanel.add(updateButton);
 
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.gridx = 0;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 3;
         mainPanel.add(buttonPanel, gbc);
 
-        // Add the Sell Product and Refresh buttons
+        // Add the Sell Product, Transaction History and Refresh buttons
         sellButton = new JButton("Sell Product");
 
-        sellButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                openSellProductWindow();
-            }
-        });
-        gbc.gridy = 3;
+        sellButton.addActionListener(e -> openSellProductWindow());
+        gbc.gridy = 4;
         gbc.gridx = 0;
         gbc.gridwidth = 1;
         mainPanel.add(sellButton, gbc);
 
-        JButton refreshButton = new JButton("Refresh");
-        refreshButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                refreshTableData();
-            }
-        });
+        JButton salesButton = new JButton("Transaction History");
+        salesButton.addActionListener(e -> openSalesHistory());
         gbc.gridx = 1;
+        mainPanel.add(salesButton, gbc);
+
+        JButton refreshButton = new JButton("Refresh");
+        refreshButton.addActionListener(e -> refreshTableData());
+        gbc.gridx = 2;
         mainPanel.add(refreshButton, gbc);
 
         // Set the main panel as the content pane
@@ -141,12 +129,17 @@ public class KapeGUI extends JFrame {
         this.setVisible(true);
     }
 
+    private void openSalesHistory() {
+        TransactionHistory transactionHistoryWindow = new TransactionHistory();
+        transactionHistoryWindow.initHistory();
+        transactionHistoryWindow.setVisible(true);
+    }
+
     private void openSellProductWindow() {
         SellProductWindow sellProductWindow = new SellProductWindow();
 
         // Fetch data from the database
         Vector<Vector<Object>> data = fetchDataFromDatabase();
-        System.out.println(data);
 
         Vector<String> columnNames = new Vector<>();
         columnNames.add("Product ID");

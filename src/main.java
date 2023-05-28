@@ -1,12 +1,10 @@
-import components.KapeGUI;
+import com.formdev.flatlaf.FlatDarkLaf;
+import components.Custom.LoginGUI;
 
 public class main {
     public static void main(String[] args) {
-        KapeGUI gui = new KapeGUI();
+        FlatDarkLaf.setup();
         LoginGUI loginGUI = new LoginGUI();
-
-        gui.init();
-//        loginGUI.initLogin();
-
+        loginGUI.initLogin();
     }
 }
