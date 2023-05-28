@@ -53,7 +53,7 @@ public class TransactionHistory extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(10, 0,10,0);
+        gbc.insets = new Insets(10, 10, 10,10);
         panel.add(titleLabel);
 
         gbc.gridy = 1;

@@ -61,8 +61,6 @@ public class SellProductWindow extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         mainPanel.add(scrollPane, gbc);
 
-
-
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.NONE;
@@ -159,7 +157,7 @@ public class SellProductWindow extends JFrame {
                 JOptionPane.showMessageDialog(this, "Not enough products!", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 ps.executeUpdate();
-                updateProductQuantity(productId, quantityToSell);
+                updateProductQuantity(quantityToSell, productId);
                 showReceipt(productName, productPrice, quantityToSell, salesDate);
             }
 

@@ -100,6 +100,7 @@ public class KapeGUI extends JFrame {
         updateButton.addActionListener(e -> updateProduct());
         buttonPanel.add(updateButton);
 
+        gbc.insets = new Insets(5,10,5,10);
         gbc.gridy = 3;
         gbc.gridx = 0;
         gbc.gridwidth = 3;
