@@ -26,6 +26,7 @@ public class KapeGUI extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(new Dimension(750, 750));
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         this.setTitle("Inventory");
 
         // Create the main panel
@@ -150,6 +151,7 @@ public class KapeGUI extends JFrame {
 
         sellProductWindow.populateTable(data, columnNames);
         sellProductWindow.setVisible(true);
+        refreshTableData();
     }
 
     private void updateProduct() {

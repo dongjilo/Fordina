@@ -29,6 +29,7 @@ public class UpdateInfoDialog extends JDialog {
         JLabel productIdLabel = new JLabel("Product ID:");
         gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.LINE_START;
         panel.add(productIdLabel, gbc);
 
@@ -36,6 +37,7 @@ public class UpdateInfoDialog extends JDialog {
         productIdField.setEditable(false);
         gbc.gridx = 1;
         gbc.gridy = 0;
+        gbc.insets = new Insets(0, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
         panel.add(productIdField, gbc);
@@ -74,6 +76,7 @@ public class UpdateInfoDialog extends JDialog {
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridwidth = 2;
+        gbc.insets = new Insets(0, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel.add(updateButton, gbc);
 
@@ -86,23 +89,14 @@ public class UpdateInfoDialog extends JDialog {
         // Configure dialog
         this.setContentPane(panel);
         this.pack();
-        this.setSize(400, 300);
+        this.setSize(400, 275);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
 
         // Add action listeners
-        updateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateProduct();
-            }
-        });
+        updateButton.addActionListener(e -> updateProduct());
 
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
+        cancelButton.addActionListener(e -> dispose());
     }
 
     private void updateProduct() {

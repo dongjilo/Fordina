@@ -25,6 +25,7 @@ public class SellProductWindow extends JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setSize(new Dimension(750, 750));
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         this.setTitle("Sell Product");
 
         JPanel mainPanel = new JPanel();

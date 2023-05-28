@@ -84,22 +84,12 @@ public class AddProductDialog extends JDialog {
         this.setContentPane(panel);
         this.pack();
         this.setSize(400, 300);
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
 
         // Add action listeners
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addProduct();
-            }
-        });
-
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
+        addButton.addActionListener(e -> addProduct());
+        cancelButton.addActionListener(e -> dispose());
     }
 
     private void addProduct() {

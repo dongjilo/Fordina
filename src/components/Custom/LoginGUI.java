@@ -13,12 +13,13 @@ public class LoginGUI extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(400, 250);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         this.setTitle("Login");
 
         JLabel titleLabel = new JLabel("Fordina Login");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 22));
-        JLabel userLabel = new JLabel("Username");
-        JLabel passwordLabel = new JLabel("Password");
+        JLabel userLabel = new JLabel("Username:");
+        JLabel passwordLabel = new JLabel("Password:.+");
 
         JTextField userField = new JTextField(15);
         JPasswordField passwordField = new JPasswordField(15);
