@@ -64,11 +64,20 @@ public class SellProductWindow extends JFrame {
 
         gbc.gridx = 1;
         gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.0;
+        gbc.insets = new Insets(0, 15, 0, 0);
+        JLabel ins = new JLabel("<html>Select a product from the table and<br>select the quantity here:</html>");
+        mainPanel.add(ins, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
         gbc.fill = GridBagConstraints.NONE;
         gbc.weightx = 0.0;
         gbc.weighty = 0.0;
+        gbc.anchor = GridBagConstraints.NORTH;
         gbc.insets = new Insets(0, 0, 0, 20);
-
         SpinnerNumberModel spinnerModel = new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1);
         quantitySpinner = new JSpinner(spinnerModel);
         mainPanel.add(quantitySpinner, gbc);
@@ -87,7 +96,7 @@ public class SellProductWindow extends JFrame {
     }
 
     /**
-     * Victor
+     * Populates the table with data and column names.
      * @param data
      * @param columnNames
      */
@@ -112,6 +121,7 @@ public class SellProductWindow extends JFrame {
 
             // Perform the necessary operations to record the transaction and update the database
             insertData(productId, productName, productPrice, quantity);
+
             refreshTableData();
         } else {
             JOptionPane.showMessageDialog(this, "Please select a product to sell.", "No Product Selected", JOptionPane.WARNING_MESSAGE);
@@ -157,11 +167,11 @@ public class SellProductWindow extends JFrame {
      * @param productPrice
      * @param quantity
      */
-    private void insertData(int productId, String productName, BigDecimal productPrice, int quantity){
+    private void insertData(int productId, String productName, BigDecimal productPrice, int quantity) {
         try {
             Connection con = DBConnector.getInstance().getConnection();
 
-            String insertQuery = "insert into sales (product_id, product_name, price, quantity, sale_date) values (?, ?, ?, ?, ?)";
+            String insertQuery = "insert into sales (product_id, product_name, price, quantity, total_price, sale_date) values (?, ?, ?, ?, ?, ?)";
 
             PreparedStatement ps = con.prepareStatement(insertQuery);
             ps.setInt(1, productId);
@@ -171,16 +181,19 @@ public class SellProductWindow extends JFrame {
             int quantityToSell = (int) quantitySpinner.getValue();
             ps.setInt(4, quantityToSell);
 
-            Timestamp salesDate = new Timestamp(System.currentTimeMillis());
-            ps.setTimestamp(5, salesDate);
+            BigDecimal totalPrice = productPrice.multiply(BigDecimal.valueOf(quantityToSell));
+            ps.setBigDecimal(5, totalPrice);
 
-            // Checks if there is enough products to sell
+            Timestamp salesDate = new Timestamp(System.currentTimeMillis());
+            ps.setTimestamp(6, salesDate);
+
+            // Checks if there are enough products to sell
             if (quantity - quantityToSell < 0) {
                 JOptionPane.showMessageDialog(this, "Not enough products!", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 ps.executeUpdate();
                 updateProductQuantity(quantityToSell, productId);
-                showReceipt(productName, productPrice, quantityToSell, salesDate);
+                showReceipt(productName, productPrice, quantityToSell, totalPrice, salesDate);
             }
 
             con.close();
@@ -194,12 +207,14 @@ public class SellProductWindow extends JFrame {
      * @param productName
      * @param productPrice
      * @param quantityToSell
+     * @param totalPrice
      * @param salesDate
      */
-    private void showReceipt(String productName, BigDecimal productPrice, int quantityToSell, Timestamp salesDate) {
+    private void showReceipt(String productName, BigDecimal productPrice, int quantityToSell, BigDecimal totalPrice, Timestamp salesDate) {
         JOptionPane.showMessageDialog(this, "Product Sold: " + productName + "\nPrice: " + productPrice +
-                "\nQuantity: " + quantityToSell + "\nSales Date: " + salesDate, "Product Sold", JOptionPane.INFORMATION_MESSAGE);
+                "\nQuantity: " + quantityToSell + "\nTotal Price: " + totalPrice + "\nSales Date: " + salesDate, "Product Sold", JOptionPane.INFORMATION_MESSAGE);
     }
+
 
     /**
      * Updates the product quantity stored in the products table after selling a product.

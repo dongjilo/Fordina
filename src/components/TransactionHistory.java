@@ -37,7 +37,8 @@ public class TransactionHistory extends JFrame {
         columnNames.add("Product Name");
         columnNames.add("Price");
         columnNames.add("Quantity");
-        columnNames.add("Sales Date");
+        columnNames.add("Total Price");
+        columnNames.add("Transaction Date");
 
         table = new KapeTable(data, columnNames);
         customTableModel tableModel = new customTableModel();

@@ -33,17 +33,14 @@ public class KapeGUI extends JFrame {
         JButton deleteButton;
         JButton sellButton;
 
-        // Fetch data from the database
         Vector<Vector<Object>> data = fetchDataFromDatabase();
 
-        // Define column names
         columnNames = new Vector<>();
         columnNames.add("Product ID");
         columnNames.add("Product Name");
         columnNames.add("Price");
         columnNames.add("Quantity");
 
-        // Create the custom table with the table model
         table = new KapeTable(data, columnNames);
 
         GridBagConstraints gbc = new GridBagConstraints();
