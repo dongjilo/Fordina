@@ -1,11 +1,7 @@
 package components;
 
-import components.DBConnector;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -13,11 +9,18 @@ import java.sql.SQLException;
 public class AddProductDialog extends JDialog {
     private JTextField productIdField, productNameField, priceField, quantityField;
 
+    /**
+     *
+     * @param parent
+     */
     public AddProductDialog (JFrame parent) {
         super (parent, "Add Product", true);
         initComponents();
     }
 
+    /**
+     * Initialize the components necessary for the add product dialog.
+     */
     private void initComponents() {
         // Create and configure components
         JPanel panel = new JPanel(new GridBagLayout());
@@ -92,6 +95,9 @@ public class AddProductDialog extends JDialog {
         cancelButton.addActionListener(e -> dispose());
     }
 
+    /**
+     * Inserts the user's input to the database
+     */
     private void addProduct() {
         // Retrieve the input values
         String productName = productNameField.getText();
@@ -108,7 +114,7 @@ public class AddProductDialog extends JDialog {
         // Insert the input values to the database
         try {
             Connection con = DBConnector.getInstance().getConnection();
-            String sql = "INSERT INTO products (product_id, product_name, price, quantity) VALUES (?, ?, ?, ?)";
+            String sql = "insert into products (product_id, product_name, price, quantity) values (?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, String.valueOf(productId));
             ps.setString(2, productName);

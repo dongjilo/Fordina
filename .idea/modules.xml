@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Fordina.iml" filepath="$PROJECT_DIR$/Fordina.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../System_CoffeeShop/System_CoffeeShop/System_CoffeeShop.iml" filepath="$PROJECT_DIR$/../System_CoffeeShop/System_CoffeeShop/System_CoffeeShop.iml" />
     </modules>
   </component>
 </project>

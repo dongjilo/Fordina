@@ -19,7 +19,9 @@ public class KapeTable extends JTable {
         initTable();
     }
 
-    // Set up table properties
+    /**
+     * Initializes the components necessary for the custom table.
+     */
     private void initTable() {
         this.getTableHeader().setReorderingAllowed(false);
         this.setModel(model);
@@ -39,6 +41,9 @@ public class KapeTable extends JTable {
 
 class customTableModel extends DefaultTableModel{
 
+    /**
+     * @see DefaultTableModel#DefaultTableModel(Vector, Vector)  
+     */
     public customTableModel(Vector<? extends Vector> data, Vector<?> columnNames){
         super(data, columnNames);
     }

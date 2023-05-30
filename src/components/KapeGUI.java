@@ -1,13 +1,10 @@
 package components;
 
-import com.formdev.flatlaf.FlatDarkLaf;
 import components.Custom.Panels.SearchPanel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -131,12 +128,18 @@ public class KapeGUI extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * Opens the transaction history window.
+     */
     private void openSalesHistory() {
         TransactionHistory transactionHistoryWindow = new TransactionHistory();
         transactionHistoryWindow.initHistory();
         transactionHistoryWindow.setVisible(true);
     }
 
+    /**
+     * Opens and populates the table in the sell product window.
+     */
     private void openSellProductWindow() {
         SellProductWindow sellProductWindow = new SellProductWindow();
 
@@ -189,6 +192,9 @@ public class KapeGUI extends JFrame {
         tableModel.setDataVector(data, columnNames);
     }
 
+    /**
+     * Displays the Add Product dialog and refreshes the table data in the main frame after disposing the Add Product dialog.
+     */
     private void showAddProductDialog() {
         AddProductDialog addProductDialog = new AddProductDialog(this);
         addProductDialog.setVisible(true);

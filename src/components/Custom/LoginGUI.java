@@ -1,13 +1,13 @@
 package components.Custom;
 
 import components.KapeGUI;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LoginGUI extends JFrame {
+    /**
+     * Initializes components necessary for the login window.
+     */
     public void initLogin() {
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -57,14 +57,14 @@ public class LoginGUI extends JFrame {
 
         loginButton.addActionListener(e -> openMainWindow());
 
-
         this.add(loginPanel);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
-
     }
 
+    /**
+     * Opens the main window KapeGUI and disposes the login window.
+     */
     private void openMainWindow() {
         KapeGUI mainWindow = new KapeGUI();
         mainWindow.init();

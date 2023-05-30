@@ -5,8 +5,6 @@ import components.Custom.Panels.SearchPanel;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.Vector;
@@ -21,6 +19,9 @@ public class SellProductWindow extends JFrame {
         init();
     }
 
+    /**
+     * Initializes the components necessary for the sell product window.
+     */
     private void init() {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setSize(new Dimension(750, 750));
@@ -86,13 +87,19 @@ public class SellProductWindow extends JFrame {
         this.setContentPane(mainPanel);
     }
 
-
+    /**
+     * Victor
+     * @param data
+     * @param columnNames
+     */
     public void populateTable(Vector<Vector<Object>> data, Vector<String> columnNames) {
         this.columnNames = columnNames;
         tableModel.setDataVector(data, columnNames);
     }
 
-    // Retrieve the selected row's data
+    /**
+     * Retrieves the selected row's data.
+     */
     private void sellSelectedProduct(){
         int selectedRow = table.getSelectedRow();
         // Check if a row is selected
@@ -112,6 +119,9 @@ public class SellProductWindow extends JFrame {
         }
     }
 
+    /**
+     * Updates the table data.
+     */
     private void refreshTableData() {
         try {
             Connection con = DBConnector.getInstance().getConnection();
@@ -141,7 +151,13 @@ public class SellProductWindow extends JFrame {
         }
     }
 
-    // Insert the sales information to the sales database
+    /**
+     * Inserts the transaction information to the database.
+     * @param productId
+     * @param productName
+     * @param productPrice
+     * @param quantity
+     */
     private void insertData(int productId, String productName, BigDecimal productPrice, int quantity){
         try {
             Connection con = DBConnector.getInstance().getConnection();
@@ -174,11 +190,23 @@ public class SellProductWindow extends JFrame {
         }
     }
 
+    /**
+     * Displays a dialog with the sold product's information along with the date of sale
+     * @param productName
+     * @param productPrice
+     * @param quantityToSell
+     * @param salesDate
+     */
     private void showReceipt(String productName, BigDecimal productPrice, int quantityToSell, Timestamp salesDate) {
         JOptionPane.showMessageDialog(this, "Product Sold: " + productName + "\nPrice: " + productPrice +
                 "\nQuantity: " + quantityToSell + "\nSales Date: " + salesDate, "Product Sold", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * Updates the product quantity stored in the products table after selling a product.
+     * @param quantityToSell
+     * @param productId
+     */
     private void updateProductQuantity(int quantityToSell, int productId) {
         try {
             Connection con = DBConnector.getInstance().getConnection();

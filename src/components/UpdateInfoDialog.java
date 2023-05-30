@@ -2,8 +2,6 @@ package components;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +19,6 @@ public class UpdateInfoDialog extends JDialog {
     }
 
     private void initComponents(String existingName, BigDecimal existingPrice, int existingQuantity) {
-        // Create and configure components
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5); // Padding

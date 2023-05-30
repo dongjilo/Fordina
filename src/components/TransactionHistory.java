@@ -1,8 +1,6 @@
 package components;
 
 import components.Custom.Panels.SearchPanel;
-import components.DBConnector;
-import components.KapeTable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,18 +24,14 @@ public class TransactionHistory extends JFrame {
         this.setResizable(false);
         this.setTitle("Transaction History");
 
-        // Main panel
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
 
-        // Components
         JLabel titleLabel = new JLabel("Fordina Cafe Transaction History");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        
-        // Fetch data from database 
+
         Vector<Vector<Object>> data = fetchDataFromDatabase();
 
-        // Define column names
         columnNames = new Vector<>();
         columnNames.add("Sales ID");
         columnNames.add("Product ID");
