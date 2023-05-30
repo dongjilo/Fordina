@@ -6,10 +6,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Vector;
 
 public class KapeGUI extends JFrame {
@@ -21,7 +18,6 @@ public class KapeGUI extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(new Dimension(750, 750));
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
         this.setTitle("Inventory");
 
         JPanel mainPanel = new JPanel();
@@ -171,9 +167,17 @@ public class KapeGUI extends JFrame {
     private void deleteProduct(int productId) {
         try {
             Connection con = DBConnector.getInstance().getConnection();
-            Statement statement = con.createStatement();
-            String query = "DELETE FROM products WHERE product_id = " + productId;
-            statement.executeUpdate(query);
+
+            // Delete related sales rows first
+            PreparedStatement deleteSalesPs = con.prepareStatement("delete from sales where product_id = ?");
+            deleteSalesPs.setInt(1, productId);
+            deleteSalesPs.executeUpdate();
+
+            // Delete the product
+            PreparedStatement deleteProductPs = con.prepareStatement("delete from products where product_id = ?");
+            deleteProductPs.setInt(1, productId);
+            deleteProductPs.executeUpdate();
+
             JOptionPane.showMessageDialog(KapeGUI.this, "Product deleted successfully.", "Product Deleted", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
