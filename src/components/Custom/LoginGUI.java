@@ -55,12 +55,7 @@ public class LoginGUI extends JFrame {
         gbc.insets = new Insets(10,0,10,0);
         loginPanel.add(loginButton, gbc);
 
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                openMainWindow();
-            }
-        });
+        loginButton.addActionListener(e -> openMainWindow());
 
 
         this.add(loginPanel);

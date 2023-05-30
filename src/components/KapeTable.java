@@ -19,6 +19,7 @@ public class KapeTable extends JTable {
         initTable();
     }
 
+    // Set up table properties
     private void initTable() {
         this.getTableHeader().setReorderingAllowed(false);
         this.setModel(model);
@@ -34,6 +35,7 @@ public class KapeTable extends JTable {
         return model;
     }
 }
+
 
 class customTableModel extends DefaultTableModel{
 

@@ -95,7 +95,6 @@ public class UpdateInfoDialog extends JDialog {
 
         // Add action listeners
         updateButton.addActionListener(e -> updateProduct());
-
         cancelButton.addActionListener(e -> dispose());
     }
 

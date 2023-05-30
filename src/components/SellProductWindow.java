@@ -91,8 +91,11 @@ public class SellProductWindow extends JFrame {
         this.columnNames = columnNames;
         tableModel.setDataVector(data, columnNames);
     }
+
+    // Retrieve the selected row's data
     private void sellSelectedProduct(){
         int selectedRow = table.getSelectedRow();
+        // Check if a row is selected
         if (selectedRow != -1) {
             int rowIndex = table.convertRowIndexToModel(selectedRow); // Convert the view index to the model index
 
@@ -108,6 +111,7 @@ public class SellProductWindow extends JFrame {
             JOptionPane.showMessageDialog(this, "Please select a product to sell.", "No Product Selected", JOptionPane.WARNING_MESSAGE);
         }
     }
+
     private void refreshTableData() {
         try {
             Connection con = DBConnector.getInstance().getConnection();
@@ -136,6 +140,8 @@ public class SellProductWindow extends JFrame {
             JOptionPane.showMessageDialog(this, "Error refreshing table data:\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    // Insert the sales information to the sales database
     private void insertData(int productId, String productName, BigDecimal productPrice, int quantity){
         try {
             Connection con = DBConnector.getInstance().getConnection();
