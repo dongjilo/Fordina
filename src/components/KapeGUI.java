@@ -13,10 +13,8 @@ import java.sql.Statement;
 import java.util.Vector;
 
 public class KapeGUI extends JFrame {
-
     private KapeTable table;
     private Vector<String> columnNames;
-
     public KapeGUI(){}
 
     public void init() {
@@ -26,11 +24,9 @@ public class KapeGUI extends JFrame {
         this.setResizable(false);
         this.setTitle("Inventory");
 
-        // Create the main panel
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridBagLayout());
 
-        // Create and configure components
         JLabel titleLabel = new JLabel("Fordina Cafe INVENTORY");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
@@ -104,7 +100,6 @@ public class KapeGUI extends JFrame {
         gbc.gridwidth = 3;
         mainPanel.add(buttonPanel, gbc);
 
-        // Add the Sell Product, Transaction History and Refresh buttons
         sellButton = new JButton("Sell Product");
 
         sellButton.addActionListener(e -> openSellProductWindow());
@@ -123,7 +118,6 @@ public class KapeGUI extends JFrame {
         gbc.gridx = 2;
         mainPanel.add(refreshButton, gbc);
 
-        // Set the main panel as the content pane
         this.setContentPane(mainPanel);
         this.setVisible(true);
     }

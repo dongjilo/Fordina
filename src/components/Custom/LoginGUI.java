@@ -19,7 +19,7 @@ public class LoginGUI extends JFrame {
         JLabel titleLabel = new JLabel("Fordina Login");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 22));
         JLabel userLabel = new JLabel("Username:");
-        JLabel passwordLabel = new JLabel("Password:.+");
+        JLabel passwordLabel = new JLabel("Password:");
 
         JTextField userField = new JTextField(15);
         JPasswordField passwordField = new JPasswordField(15);
