@@ -204,7 +204,7 @@ public class SellProductWindow extends JFrame {
 
     /**
      * Displays a dialog with the sold product's information along with the date of sale
-     * @param productName
+     * @param productName tftg
      * @param productPrice
      * @param quantityToSell
      * @param totalPrice
