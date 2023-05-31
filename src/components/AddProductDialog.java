@@ -1,5 +1,7 @@
 package components;
 
+import components.Custom.Icons.Icons;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
@@ -23,6 +25,7 @@ public class AddProductDialog extends JDialog {
      */
     private void initComponents() {
         // Create and configure components
+        this.setIconImage(Icons.LOGO);
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5); // Padding

@@ -1,5 +1,6 @@
 package components;
 
+import components.Custom.Icons.Icons;
 import components.Custom.Panels.SearchPanel;
 
 import javax.swing.*;
@@ -21,6 +22,7 @@ public class TransactionHistory extends JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setSize(750,750);
         this.setLocationRelativeTo(null);
+        this.setIconImage(Icons.LOGO);
         this.setTitle("Transaction History");
 
         JPanel panel = new JPanel();

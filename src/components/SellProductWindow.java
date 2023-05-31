@@ -1,5 +1,6 @@
 package components;
 
+import components.Custom.Icons.Icons;
 import components.Custom.Panels.SearchPanel;
 
 import javax.swing.*;
@@ -26,6 +27,7 @@ public class SellProductWindow extends JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setSize(new Dimension(750, 750));
         this.setLocationRelativeTo(null);
+        this.setIconImage(Icons.LOGO);
         this.setTitle("Sell Product");
 
         JPanel mainPanel = new JPanel();
@@ -34,13 +36,19 @@ public class SellProductWindow extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 10, 5, 10);
         gbc.gridwidth = 2;
-        gbc.insets = new Insets(20, 20, 20, 20);
 
         JLabel titleLabel = new JLabel("Sell Product");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         mainPanel.add(titleLabel, gbc);
+        ImageIcon sellIcon = new ImageIcon(Icons.sellHand);
+        JLabel sellHandIcon = new JLabel(sellIcon);
+        titleLabel.setIconTextGap(5); // Add some spacing between the icon and the label text
+        titleLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
+        titleLabel.setVerticalTextPosition(SwingConstants.CENTER);
+        titleLabel.setIcon(sellIcon);
 
         tableModel = new customTableModel();
         table = new KapeTable(tableModel);

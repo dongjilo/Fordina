@@ -1,6 +1,7 @@
 package components.Custom.Panels;
 
 import components.KapeTable;
+import components.Custom.Icons.Icons;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -20,7 +21,7 @@ public class SearchPanel extends JPanel implements KeyListener {
         this.sorter = new TableRowSorter<>(table.getModel());
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         search.addKeyListener(this);
-        this.add(new JLabel("Search: "));
+        this.add(new JLabel(new ImageIcon(Icons.search)));
         this.add(search);
     }
 
