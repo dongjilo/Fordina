@@ -90,6 +90,7 @@ public class SellProductWindow extends JFrame {
         quantitySpinner = new JSpinner(spinnerModel);
         mainPanel.add(quantitySpinner, gbc);
 
+
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 2;
