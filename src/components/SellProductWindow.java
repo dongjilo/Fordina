@@ -82,18 +82,27 @@ public class SellProductWindow extends JFrame {
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0.0;
-        gbc.weighty = 0.0;
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.insets = new Insets(0, 0, 0, 20);
         SpinnerNumberModel spinnerModel = new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1);
         quantitySpinner = new JSpinner(spinnerModel);
         mainPanel.add(quantitySpinner, gbc);
 
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.insets = new Insets(30, 9, 0, 25);
+
+        JButton salesHistoryButton = new JButton(new ImageIcon(Icons.history));
+        salesHistoryButton.setToolTipText("Sales History");
+        salesHistoryButton.addActionListener(e -> openSalesHistory());
+        mainPanel.add(salesHistoryButton, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(0, 20, 20, 20);
 
@@ -102,6 +111,12 @@ public class SellProductWindow extends JFrame {
         mainPanel.add(sellButton, gbc);
 
         this.setContentPane(mainPanel);
+    }
+
+    private void openSalesHistory() {
+        TransactionHistory transactionHistoryWindow = new TransactionHistory();
+        transactionHistoryWindow.initHistory();
+        transactionHistoryWindow.setVisible(true);
     }
 
     /**
