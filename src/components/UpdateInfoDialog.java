@@ -88,6 +88,9 @@ public class UpdateInfoDialog extends JDialog {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
+        getRootPane().setDefaultButton(updateButton);
+        productNameField.requestFocusInWindow();
+
         // Add action listeners
         updateButton.addActionListener(e -> updateProduct());
         cancelButton.addActionListener(e -> dispose());
@@ -95,13 +98,21 @@ public class UpdateInfoDialog extends JDialog {
 
     private void updateProduct() {
         // Retrieve the input values
-        String productName = productNameField.getText();
-        double price = Double.parseDouble(priceField.getText());
-        int quantity = Integer.parseInt(quantityField.getText());
+        String productName = productNameField.getText(), priceText = priceField.getText(), quantityText = quantityField.getText();
+        double price;
+        int productId = Integer.parseInt(productIdField.getText()), quantity;
 
         // Validate the input values
-        if (productName.isEmpty()) {
+        if (productName.isEmpty() || priceText.isEmpty() || quantityText.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill out all the fields", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            price = Double.parseDouble(priceText);
+            quantity = Integer.parseInt(quantityText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter valid numeric values for price and quantity", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 

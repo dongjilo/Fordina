@@ -25,7 +25,7 @@ public class KapeGUI extends JFrame {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridBagLayout());
 
-        JLabel titleLabel = new JLabel("Fordina Cafe INVENTORY");
+        JLabel titleLabel = new JLabel("Fordina INVENTORY");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         ImageIcon listIcon = new ImageIcon(Icons.list);
         JLabel listIconLabel = new JLabel(listIcon);
@@ -34,22 +34,29 @@ public class KapeGUI extends JFrame {
         titleLabel.setVerticalTextPosition(SwingConstants.CENTER);
         titleLabel.setIcon(listIcon);
 
+        Dimension buttonSize = new Dimension(100, 50);
+
         JButton addButton = new JButton(new ImageIcon(Icons.add));
         addButton.setToolTipText("Add Product");
         addButton.addActionListener(e -> showAddProductDialog());
+        addButton.setPreferredSize(buttonSize);
 
-        JButton sellButton = new JButton(new ImageIcon(Icons.sell));
-        sellButton.setToolTipText("Sell Product");
-        sellButton.addActionListener(e -> openSellProductWindow());
+//        JButton sellButton = new JButton(new ImageIcon(Icons.sell));
+//        sellButton.setToolTipText("Sell Product");
+//        sellButton.addActionListener(e -> openSellProductWindow());
 
         JButton deleteButton = new JButton(new ImageIcon(Icons.delete));
         deleteButton.setToolTipText("Delete Product");
+        deleteButton.setPreferredSize(buttonSize);
         deleteButton.addActionListener(e -> {
             int selectedRow = table.getSelectedRow();
             if (selectedRow != -1) {
                 int productId = (int) table.getValueAt(selectedRow, 0);
-                deleteProduct(productId);
-                refreshTableData();
+                int choice = JOptionPane.showConfirmDialog(KapeGUI.this, "Are you sure you want to delete this product?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+                if (choice == JOptionPane.YES_OPTION) {
+                    deleteProduct(productId);
+                    refreshTableData();
+                }
             } else {
                 JOptionPane.showMessageDialog(KapeGUI.this, "Please select a row to delete.", "No Product Selected", JOptionPane.WARNING_MESSAGE);
             }
@@ -58,14 +65,12 @@ public class KapeGUI extends JFrame {
         JButton updateButton = new JButton(new ImageIcon(Icons.update));
         updateButton.setToolTipText("Update Product Information");
         updateButton.addActionListener(e -> updateProduct());
-
-        JButton salesButton = new JButton(new ImageIcon(Icons.history));
-        salesButton.setToolTipText("Transaction History");
-        salesButton.addActionListener(e -> openSalesHistory());
+        updateButton.setPreferredSize(buttonSize);
 
         JButton refreshButton = new JButton(new ImageIcon(Icons.refresh));
         refreshButton.setToolTipText("Refresh");
         refreshButton.addActionListener(e -> refreshTableData());
+        refreshButton.setPreferredSize(buttonSize);
 
         Vector<Vector<Object>> data = fetchDataFromDatabase();
         columnNames = new Vector<>();
@@ -85,7 +90,6 @@ public class KapeGUI extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.gridwidth = 2;
         mainPanel.add(new SearchPanel(table), gbc);
 
         gbc.gridy = 2;
@@ -95,31 +99,33 @@ public class KapeGUI extends JFrame {
         gbc.fill = GridBagConstraints.BOTH;
         mainPanel.add(new JScrollPane(table), gbc);
 
+// Create a JPanel for the button panel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 15));
+
+// Add button
+        buttonPanel.add(addButton);
+
+// Delete button
+        buttonPanel.add(deleteButton);
+
+// Update button
+        buttonPanel.add(updateButton);
+
+// Refresh button
+        buttonPanel.add(refreshButton);
+
+// Add the button panel to the main panel
         gbc.gridx = 0;
         gbc.gridy = 3;
-        gbc.insets = new Insets(15, 10, 15, 10);
-        gbc.gridwidth = 1;
         gbc.weighty = 0;
-        mainPanel.add(addButton, gbc);
-
-        gbc.gridx = 1;
-        mainPanel.add(sellButton, gbc);
-
-        gbc.gridx = 2;
-        mainPanel.add(deleteButton, gbc);
-
-        gbc.gridx = 3;
-        mainPanel.add(updateButton, gbc);
-
-        gbc.gridx = 4;
-        mainPanel.add(salesButton, gbc);
-
-        gbc.gridx = 5;
-        gbc.gridwidth = GridBagConstraints.REMAINDER; // Set gridwidth to REMAINDER for the last button
-        mainPanel.add(refreshButton, gbc);
+        gbc.weightx = 0;
+        gbc.insets = new Insets(15, 10, 15, 10);
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        mainPanel.add(buttonPanel, gbc);
 
         this.setContentPane(mainPanel);
         this.setVisible(true);
+
     }
 
     /**
@@ -129,26 +135,6 @@ public class KapeGUI extends JFrame {
         TransactionHistory transactionHistoryWindow = new TransactionHistory();
         transactionHistoryWindow.initHistory();
         transactionHistoryWindow.setVisible(true);
-    }
-
-    /**
-     * Opens and populates the table in the sell product window.
-     */
-    private void openSellProductWindow() {
-        SellProductWindow sellProductWindow = new SellProductWindow();
-
-        // Fetch data from the database
-        Vector<Vector<Object>> data = fetchDataFromDatabase();
-
-        Vector<String> columnNames = new Vector<>();
-        columnNames.add("Product ID");
-        columnNames.add("Product Name");
-        columnNames.add("Price");
-        columnNames.add("Quantity");
-
-        sellProductWindow.populateTable(data, columnNames);
-        sellProductWindow.setVisible(true);
-        refreshTableData();
     }
 
     private void updateProduct() {

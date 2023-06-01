@@ -76,6 +76,7 @@ public class LoginGUI extends JFrame {
         loginButton.addActionListener(e -> openMainWindow());
 
         this.add(loginPanel);
+        getRootPane().setDefaultButton(loginButton);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
