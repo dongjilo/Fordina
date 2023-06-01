@@ -41,10 +41,6 @@ public class KapeGUI extends JFrame {
         addButton.addActionListener(e -> showAddProductDialog());
         addButton.setPreferredSize(buttonSize);
 
-//        JButton sellButton = new JButton(new ImageIcon(Icons.sell));
-//        sellButton.setToolTipText("Sell Product");
-//        sellButton.addActionListener(e -> openSellProductWindow());
-
         JButton deleteButton = new JButton(new ImageIcon(Icons.delete));
         deleteButton.setToolTipText("Delete Product");
         deleteButton.setPreferredSize(buttonSize);
@@ -99,22 +95,16 @@ public class KapeGUI extends JFrame {
         gbc.fill = GridBagConstraints.BOTH;
         mainPanel.add(new JScrollPane(table), gbc);
 
-// Create a JPanel for the button panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 15));
 
-// Add button
         buttonPanel.add(addButton);
 
-// Delete button
         buttonPanel.add(deleteButton);
 
-// Update button
         buttonPanel.add(updateButton);
 
-// Refresh button
         buttonPanel.add(refreshButton);
 
-// Add the button panel to the main panel
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.weighty = 0;

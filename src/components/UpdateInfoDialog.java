@@ -81,7 +81,6 @@ public class UpdateInfoDialog extends JDialog {
         gbc.gridy = 4;
         panel.add(cancelButton, gbc);
 
-        // Configure dialog
         this.setContentPane(panel);
         this.pack();
         this.setSize(400, 250);
@@ -91,7 +90,6 @@ public class UpdateInfoDialog extends JDialog {
         getRootPane().setDefaultButton(updateButton);
         productNameField.requestFocusInWindow();
 
-        // Add action listeners
         updateButton.addActionListener(e -> updateProduct());
         cancelButton.addActionListener(e -> dispose());
     }
