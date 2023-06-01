@@ -91,31 +91,31 @@ public class KapeGUI extends JFrame {
         gbc.gridy = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.gridwidth = 3;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.BOTH;
         mainPanel.add(new JScrollPane(table), gbc);
 
-        gbc.insets = new Insets(5, 10, 5, 10);
-        gbc.gridy = 3;
         gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.insets = new Insets(15, 10, 15, 10);
         gbc.gridwidth = 1;
+        gbc.weighty = 0;
         mainPanel.add(addButton, gbc);
 
         gbc.gridx = 1;
         mainPanel.add(sellButton, gbc);
 
-        gbc.gridy = 4;
-        gbc.gridx = 0;
+        gbc.gridx = 2;
         mainPanel.add(deleteButton, gbc);
 
-        gbc.gridx = 1;
+        gbc.gridx = 3;
         mainPanel.add(updateButton, gbc);
 
-        gbc.gridy = 5;
-        gbc.gridx = 0;
+        gbc.gridx = 4;
         mainPanel.add(salesButton, gbc);
 
-        gbc.gridx = 1;
+        gbc.gridx = 5;
+        gbc.gridwidth = GridBagConstraints.REMAINDER; // Set gridwidth to REMAINDER for the last button
         mainPanel.add(refreshButton, gbc);
 
         this.setContentPane(mainPanel);
@@ -190,7 +190,7 @@ public class KapeGUI extends JFrame {
 
     public void refreshTableData() {
         Vector<Vector<Object>> data = fetchDataFromDatabase();
-        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+        DefaultTableModel tableModel = table.getModel();
         tableModel.setDataVector(data, columnNames);
     }
 

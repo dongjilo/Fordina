@@ -24,7 +24,7 @@ public class AddProductDialog extends JDialog {
      * Initialize the components necessary for the add product dialog.
      */
     private void initComponents() {
-        // Create and configure components
+
         this.setIconImage(Icons.LOGO);
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -76,20 +76,17 @@ public class AddProductDialog extends JDialog {
         JButton addButton = new JButton("Add");
         gbc.gridx = 0;
         gbc.gridy = 4;
-        gbc.gridwidth = 2;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         panel.add(addButton, gbc);
 
         JButton cancelButton = new JButton("Cancel");
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        gbc.gridwidth = 2;
+        gbc.gridx = 1;
+        gbc.gridy = 4;
         panel.add(cancelButton, gbc);
 
         // Configure dialog
         this.setContentPane(panel);
         this.pack();
-        this.setSize(400, 300);
+        this.setSize(400, 250);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
 

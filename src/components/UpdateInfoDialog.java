@@ -29,7 +29,6 @@ public class UpdateInfoDialog extends JDialog {
         JLabel productIdLabel = new JLabel("Product ID:");
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.LINE_START;
         panel.add(productIdLabel, gbc);
 
@@ -37,7 +36,6 @@ public class UpdateInfoDialog extends JDialog {
         productIdField.setEditable(false);
         gbc.gridx = 1;
         gbc.gridy = 0;
-        gbc.insets = new Insets(0, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
         panel.add(productIdField, gbc);
@@ -75,21 +73,18 @@ public class UpdateInfoDialog extends JDialog {
         JButton updateButton = new JButton("Update");
         gbc.gridx = 0;
         gbc.gridy = 4;
-        gbc.gridwidth = 2;
-        gbc.insets = new Insets(0, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel.add(updateButton, gbc);
 
         JButton cancelButton = new JButton("Cancel");
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        gbc.gridwidth = 2;
+        gbc.gridx = 1;
+        gbc.gridy = 4;
         panel.add(cancelButton, gbc);
 
         // Configure dialog
         this.setContentPane(panel);
         this.pack();
-        this.setSize(400, 275);
+        this.setSize(400, 250);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
