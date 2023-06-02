@@ -186,7 +186,7 @@ public class SellProductWindow extends JFrame {
 
     /**
      * Inserts the transaction information to the database.
-     * @param productId
+     * @param productId unique product identifier
      * @param productName
      * @param productPrice
      * @param quantity
