@@ -95,27 +95,54 @@ public class KapeGUI extends JFrame {
         gbc.fill = GridBagConstraints.BOTH;
         mainPanel.add(new JScrollPane(table), gbc);
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 15));
+        JButton sellProductButton = new JButton(new ImageIcon(Icons.sell));
+        sellProductButton.setToolTipText("Sell Product");
+        sellProductButton.addActionListener(e -> showSellProductWindow());
+        sellProductButton.setPreferredSize(buttonSize);
 
-        buttonPanel.add(addButton);
+        JButton salesHistoryButton = new JButton(new ImageIcon(Icons.history));
+        salesHistoryButton.setToolTipText("Sales History");
+        salesHistoryButton.addActionListener(e -> openSalesHistory());
+        salesHistoryButton.setPreferredSize(buttonSize);
+        JPanel buttonPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints buttonConstraints = new GridBagConstraints();
+        buttonConstraints.fill = GridBagConstraints.HORIZONTAL;
+        buttonConstraints.insets = new Insets(15, 10, 15, 10);
 
-        buttonPanel.add(deleteButton);
+        buttonConstraints.gridx = 0;
+        buttonConstraints.gridy = 0;
+        buttonPanel.add(addButton, buttonConstraints);
 
-        buttonPanel.add(updateButton);
+        buttonConstraints.gridx = 1;
+        buttonConstraints.gridy = 0;
+        buttonPanel.add(deleteButton, buttonConstraints);
 
-        buttonPanel.add(refreshButton);
+        buttonConstraints.gridx = 2;
+        buttonConstraints.gridy = 0;
+        buttonPanel.add(updateButton, buttonConstraints);
 
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.weighty = 0;
-        gbc.weightx = 0;
-        gbc.insets = new Insets(15, 10, 15, 10);
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        mainPanel.add(buttonPanel, gbc);
+        buttonConstraints.gridx = 3;
+        buttonConstraints.gridy = 0;
+        buttonPanel.add(sellProductButton, buttonConstraints);
+
+        buttonConstraints.gridx = 4;
+        buttonConstraints.gridy = 0;
+        buttonPanel.add(salesHistoryButton, buttonConstraints);
+
+        buttonConstraints.gridx = 5;
+        buttonConstraints.gridy = 0;
+        buttonPanel.add(refreshButton, buttonConstraints);
+
+        mainPanel.add(buttonPanel);
 
         this.setContentPane(mainPanel);
         this.setVisible(true);
+    }
 
+    private void showSellProductWindow() {
+        SellProductWindow sellProductWindow = new SellProductWindow();
+        sellProductWindow.populateTable(fetchDataFromDatabase(), columnNames);
+        sellProductWindow.setVisible(true);
     }
 
     /**

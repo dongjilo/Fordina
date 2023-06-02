@@ -121,8 +121,8 @@ public class SellProductWindow extends JFrame {
 
     /**
      * Populates the table with data and column names.
-     * @param data
-     * @param columnNames
+     * @param data The data for the table
+     * @param columnNames Column headers
      */
     public void populateTable(Vector<Vector<Object>> data, Vector<String> columnNames) {
         this.columnNames = columnNames;
