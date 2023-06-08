@@ -211,7 +211,7 @@ public class KapeGUI extends JFrame {
         try {
             Connection konek = DBConnector.getInstance().getConnection();
             Statement statement = konek.createStatement();
-            try(ResultSet rs = statement.executeQuery("SELECT * FROM products")){
+            try(ResultSet rs = statement.executeQuery("select * from products")){
                 while (rs.next()) {
                     Vector<Object> row = new Vector<>();
                     for (int i = 1; i <=  rs.getMetaData().getColumnCount(); i++) {

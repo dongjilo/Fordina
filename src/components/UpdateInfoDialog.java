@@ -117,7 +117,7 @@ public class UpdateInfoDialog extends JDialog {
         // Update the product in the database
         try {
             Connection con = DBConnector.getInstance().getConnection();
-            String sql = "update products set product_name = ?, price = ?, quantity = ? WHERE product_id = ?";
+            String sql = "update products set product_name = ?, price = ?, quantity = ? where product_id = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, productName);
             ps.setDouble(2, price);
